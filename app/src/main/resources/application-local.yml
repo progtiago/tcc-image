@@ -1,0 +1,52 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/tcc-image
+  kafka:
+    bootstrap-servers: localhost:9092
+    listener:
+      missing-topics-fatal: false
+    consumer:
+      group-id: tcc-image
+      bootstrapServers: ${spring.kafka.bootstrap-servers}
+      enableAutoCommit: true
+    producer:
+      bootstrap-servers: ${spring.kafka.bootstrap-servers}
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+  rabbitmq:
+    addresses: localhost:5672
+    username: guest
+    password: guest
+    virtual-host: /
+    encode: UTF-8
+    exchange: ufpr.tcc.image.exchange
+    queues:
+      product-images:
+        download:
+          name: ufpr.tcc-image.product-images.download.queue
+          routing-key: ufpr.tcc-image.product-images.rk
+          prefetchCount: 1
+          concurrencyConsumers: 10
+          maxConcurrentConsumers: 20
+        retry:
+          name: ufpr.tcc-image.product-images.retry.queue
+          routing-key: ufpr.tcc-image.product-images.retry.rk
+          prefetchCount: 1
+          concurrentConsumers: 1
+          maxConcurrentConsumers: 2
+        retry-delay:
+          name: ufpr.tcc-image.product-images.retry.delay.queue
+          routing-key: ufpr.tcc-image.product-images.retry.delay.rk
+          delayInMs: 30000
+tcc-image:
+  download:
+    root-dir: /Users/tiago/UFPR/TCC/images/
+    connection-timeout-millis: 4000
+    read-timeout-millis: 7000
+    max-redirects: 3
+    user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.5195.102 Safari/537.36
+    limit-attempts: 6
+  resize:
+    height: 410
+    width: 410

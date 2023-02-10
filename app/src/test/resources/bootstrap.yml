@@ -1,0 +1,19 @@
+spring:
+  profiles:
+    active: container-test
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: container-test
+  cloud:
+    kubernetes:
+      enabled: false
+      secrets:
+        enabled: false
+      config:
+        enabled: false
+      discovery:
+        enabled: false

@@ -1,0 +1,61 @@
+server:
+  shutdown: graceful
+spring:
+  profiles.default: local
+  application:
+    name: tcc-image
+  cloud:
+    discovery:
+      client:
+        composite-indicator:
+          enabled: false
+  data:
+    mongodb:
+      auto-index-creation: true
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
+  jackson:
+    default-property-inclusion: non_null
+    deserialization:
+      FAIL_ON_UNKNOWN_PROPERTIES: false
+    mapper:
+      ACCEPT_CASE_INSENSITIVE_PROPERTIES: true
+    parser:
+      ALLOW_COMMENTS: true
+  kafka:
+    listener:
+      missing-topics-fatal: false
+    consumer:
+      group-id: tcc-image
+      bootstrapServers: ${spring.kafka.bootstrap-servers}
+      enableAutoCommit: true
+    producer:
+      bootstrap-servers: ${spring.kafka.bootstrap-servers}
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+info:
+  build:
+    name: '@project.name@'
+  app:
+    encoding: @project.build.sourceEncoding@
+    java:
+      source: @java.version@
+      target: @java.version@
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+        exclude: configmaps
+  endpoint:
+    health:
+      show-details: always
+  health:
+    probes:
+      enabled: true
+  info:
+    git:
+      mode: full
+
