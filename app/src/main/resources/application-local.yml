@@ -2,18 +2,6 @@ spring:
   data:
     mongodb:
       uri: mongodb://localhost:27017/tcc-image
-  kafka:
-    bootstrap-servers: localhost:9092
-    listener:
-      missing-topics-fatal: false
-    consumer:
-      group-id: tcc-image
-      bootstrapServers: ${spring.kafka.bootstrap-servers}
-      enableAutoCommit: true
-    producer:
-      bootstrap-servers: ${spring.kafka.bootstrap-servers}
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
   rabbitmq:
     addresses: localhost:5672
     username: guest

@@ -22,18 +22,6 @@ spring:
       ACCEPT_CASE_INSENSITIVE_PROPERTIES: true
     parser:
       ALLOW_COMMENTS: true
-  kafka:
-    listener:
-      missing-topics-fatal: false
-    consumer:
-      group-id: tcc-image
-      bootstrapServers: ${spring.kafka.bootstrap-servers}
-      enableAutoCommit: true
-    producer:
-      bootstrap-servers: ${spring.kafka.bootstrap-servers}
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
-
 info:
   build:
     name: '@project.name@'
